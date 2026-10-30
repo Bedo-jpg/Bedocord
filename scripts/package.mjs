@@ -1,0 +1,17 @@
+import {cpSync,existsSync,mkdirSync,renameSync,rmSync} from 'node:fs';
+import {join} from 'node:path';
+const base=process.cwd(),dist=join(base,'node_modules','electron','dist');
+if(!existsSync(join(dist,'electron.exe')))throw new Error('Electron çalışma zamanı eksik. Önce node node_modules/electron/install.js çalıştırın.');
+const out=join(base,'release','Bedocord');
+mkdirSync(out,{recursive:true});
+cpSync(dist,out,{recursive:true,force:true});
+const app=join(out,'resources','app');mkdirSync(join(app,'node_modules','sql.js','dist'),{recursive:true});
+cpSync(join(base,'build'),join(app,'build'),{recursive:true,force:true});
+cpSync(join(base,'package.json'),join(app,'package.json'));
+cpSync(join(base,'node_modules','sql.js','package.json'),join(app,'node_modules','sql.js','package.json'));
+cpSync(join(base,'node_modules','sql.js','dist','sql-wasm.js'),join(app,'node_modules','sql.js','dist','sql-wasm.js'));
+cpSync(join(base,'node_modules','sql.js','dist','sql-wasm.wasm'),join(out,'resources','sql-wasm.wasm'));
+const exe=join(out,'electron.exe');
+if(existsSync(join(out,'Bedocord.exe')))rmSync(join(out,'Bedocord.exe'));
+renameSync(exe,join(out,'Bedocord.exe'));
+console.log(`Bedocord Windows klasör paketi hazır: ${out}`);

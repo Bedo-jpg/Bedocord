@@ -1,0 +1,9 @@
+# Doğrulama kaydı
+
+İlk plan ve tasarım, `outputs/2026-10-30-ozel-sohbet-tasarimi.md` ve `docs/superpowers/plans/2026-10-30-mola.md` içindedir. Kullanıcının verdiği iki görsele göre ürünün görünen adı Bedocord, varsayılan görünümü ise turuncu/koyu kahverengi olarak güncellendi. Kaynak görseller `src/ui/assets` klasöründedir.
+
+Son çalıştırmada `npm run typecheck`, `npm test` (25/25) ve `npm run package` başarılı oldu. Otomatik testler; kimlik/imza kontrolü, değiştirilmiş mesajın reddi, veritabanını kapatıp açma, yedekleme onayı, disk yazması başarısızlığında geri alma, üyelikten çıkarma sınırı, kurtarma dosyası ve yeni yönetici kimliği, yerel TLS bağlantısı, tek kullanımlık davet, üç kişilik devir ve yeniden birleşme, on kişilik mesaj/devir yükü, ağ adresi değişikliği, masaüstü istek doğrulaması, bu cihazdaki grup kaydını silme, ekran yakalama izni, mesaj yedekleme etiketi ve işlem sesi kalıplarını kapsar. Yerel yayın ön izlemesinin ve seslerin gerçek Windows cihazında görsel/işitsel doğrulaması bu ortamda yapılamadı.
+
+Electron masaüstü penceresi bu sandbox ortamında açılmadan `STATUS_BREAKPOINT` / `STATUS_ACCESS_VIOLATION` koduyla kapanmıştır. Aynı hata içerik yüklemeyen asgari Electron uygulamasında da oluştuğu için bu ortamda arayüzün görsel testi yapılamadı. Paketleyici de sandbox geçici klasöründeki dosyayı önbelleğe taşırken `EPERM` verdi; bu nedenle paket, indirilmiş Electron çalışma zamanından yerel `scripts/package.mjs` ile oluşturuldu. Bu bulgular, Windows paketinin kullanıcı bilgisayarında çalıştığını kanıtlamaz veya çürütmez. İki fiziksel Windows bilgisayarı ile Radmin, ses ve ekran yayını testleri ayrıca gereklidir.
+
+Bilinen sınırlama: Yönetici yedeği alındıktan sonra gruba yeni bir kişi katıldıysa ve kurtarma sırasında erişilebilen mevcut üyede yeni üyelik kaydı yoksa o kişi yeniden davet edilmelidir. Uygulama düşük bant genişliğini otomatik ölçüp yayını duraklatmaz; yayıncı 480p kalite seçeneğini kullanabilir.

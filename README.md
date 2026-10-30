@@ -8,7 +8,7 @@ En fazla 10 arkadaş için özel Windows sohbet uygulaması. Yazı kanalları, s
 2. Bedocord paketini açıp `Bedocord.exe` dosyasını çalıştırın. Windows güvenlik duvarı izin isterse yalnızca bu uygulamanın **özel ağ** bağlantısına izin verin. Güvenlik duvarını kapatmayın. Radmin'in uzaktan kontrol ürünü olan Radmin Server gerekmez.
 3. İlk kişi **Grup kur** bölümünde takma adını, grup adını ve `26.x.x.x` Radmin adresini seçer. Uygulama açıkken **Arkadaş davet et** düğmesiyle kod üretir.
 4. Diğer kişiler kendi Radmin adreslerini seçip **Davete katıl** bölümüne kodu yapıştırır. Her kod bir kez ve 15 dakika içinde kullanılabilir. Yeni üye kabul edilirken yöneticinin uygulaması açık olmalıdır; daha sonra yöneticinin çevrimdışı olması sohbeti durdurmaz.
-5. Ses odasına tıklayarak mikrofonu başlatın. Ekran paylaşmak için ses odasındaki ekran simgesine basıp ekran/pencere seçin. Yakalama yalnızca bu açık eylemlerle başlar.
+5. Ses odasına tıklayarak mikrofonu başlatın. Ekran paylaşmak için ses odasındaki ekran simgesine basıp ekran/pencere seçin. Arkadaşınız aynı ses odasına katıldığında yayın penceresi onun ekranında otomatik açılır; ayrıca bir izleme düğmesi yoktur. Yakalama yalnızca bu açık eylemlerle başlar.
 
 Yayın açıldığında sağ altta kendi görüntünüzün küçük ve sessiz bir ön izlemesi görünür. Ön izlemeyi gizleyip ses odasındaki **Ön izleme** düğmesiyle geri açabilirsiniz; gizlemek yayını durdurmaz. Mesaj, odaya giriş/çıkış, mikrofon ve yayın işlemlerinin kısa sesleri **Ayarlar → Ses ayarları → İşlem sesleri** ile kapatılabilir. Kendi mesajınızda **Bu cihazda** yazması mesajın yerel olarak kaydedildiği anlamına gelir; başka bilgisayar mesajı aldığında **Başka cihaza yedeklendi** görünür. Tek kişilik grupta yedek göstergesi beklenmez.
 

@@ -31,7 +31,7 @@ export class MediaController {
     if(!this.snapshot)return;
     const pc=new RTCPeerConnection({iceServers:[]});
     const link:Link={pc,makingOffer:false,ignoreOffer:false,polite:this.snapshot.selfId>id,audio:new MediaStream(),video:new MediaStream(),candidates:[]};this.links.set(id,link);
-    pc.onnegotiationneeded=async()=>{try{link.makingOffer=true;await pc.setLocalDescription();await api.action({type:'signal',peerId:id,signal:{description:pc.localDescription}});}catch{}finally{link.makingOffer=false;}};
+    pc.onnegotiationneeded=async()=>{try{link.makingOffer=true;await pc.setLocalDescription();await api.action({type:'signal',peerId:id,signal:{description:pc.localDescription?.toJSON()}});}catch{}finally{link.makingOffer=false;}};
     pc.onicecandidate=event=>{if(event.candidate)void api.action({type:'signal',peerId:id,signal:{candidate:event.candidate.toJSON()}}).catch(()=>{});};
     pc.ontrack=event=>{(event.track.kind==='video'?link.video:link.audio).addTrack(event.track);event.track.onended=()=>this.onChange();this.onChange();};
     pc.oniceconnectionstatechange=()=>{if(pc.iceConnectionState==='failed'&&this.screen)this.onError('Yayın bağlantısı koptu. Radmin bağlantısını kontrol edin.');};
@@ -42,7 +42,7 @@ export class MediaController {
   async acceptSignal(from:string,signal:any){if(!this.room||!this.snapshot?.peers.some(p=>p.id===from&&p.online))return;
     if(!this.snapshot.peers.some(p=>p.id===from&&p.presence.room===this.room)){const queued=this.pendingSignals.get(from)??[];if(queued.length<32)this.pendingSignals.set(from,[...queued,signal]);return;}
     if(!this.links.has(from))this.connect(from);const link=this.links.get(from)!;const pc=link.pc;
-    if(signal?.description){const desc=signal.description as RTCSessionDescriptionInit;const collision=desc.type==='offer'&&(link.makingOffer||pc.signalingState!=='stable');link.ignoreOffer=!link.polite&&collision;if(link.ignoreOffer)return;await pc.setRemoteDescription(desc);for(const candidate of link.candidates.splice(0))await pc.addIceCandidate(candidate);if(desc.type==='offer'){await pc.setLocalDescription();await api.action({type:'signal',peerId:from,signal:{description:pc.localDescription}});}}
+    if(signal?.description){const desc=signal.description as RTCSessionDescriptionInit;const collision=desc.type==='offer'&&(link.makingOffer||pc.signalingState!=='stable');link.ignoreOffer=!link.polite&&collision;if(link.ignoreOffer)return;await pc.setRemoteDescription(desc);for(const candidate of link.candidates.splice(0))await pc.addIceCandidate(candidate);if(desc.type==='offer'){await pc.setLocalDescription();await api.action({type:'signal',peerId:from,signal:{description:pc.localDescription?.toJSON()}});}}
     else if(signal?.candidate){if(!pc.remoteDescription){if(link.candidates.length<64)link.candidates.push(signal.candidate);return;}try{await pc.addIceCandidate(signal.candidate);}catch(e){if(!link.ignoreOffer)throw e;}}
   }
 }
